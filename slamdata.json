@@ -1,0 +1,44 @@
+[
+    {
+        "device_status": {
+            "state": "localisation",
+            "sessions": [
+                "RoTest"
+            ],
+            "health": {
+                "license": "active",
+                "camera": true
+            },
+            "slam_state": {
+                "run_uuid": "cb5d4a69-eb2c-4d4f-a029-1da157c4c615",
+                "start_time": "2025-10-31T07:02:21.027351Z",
+                "mode": "localisation",
+                "input_map": "RoTest.transient",
+                "output_map": "RoTest.transient",
+                "features": {
+                    "markers": {
+                        "detector": true,
+                        "database": true
+                    },
+                    "perception": {
+                        "runner": false
+                    }
+                }
+            },
+            "external_storage": false
+        }
+    },
+    {
+        "pose": {
+            "x": -27.086,
+            "y": 32.087,
+            "z": -11.993,
+            "qx": 0.1078308279336973,
+            "qy": -0.008410075112329806,
+            "qz": 0.20951621814638016,
+            "qw": 0.9718048865473856,
+            "reference_frame": "Unknown_0",
+            "timestamp": "2025-10-31T09:45:30.193792Z"
+        }
+    }
+]

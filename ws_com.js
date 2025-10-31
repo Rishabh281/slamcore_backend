@@ -1,8 +1,6 @@
-const io = require("socket.io-client");
 require("dotenv").config();
+const WebSocket = require("ws");
 
-const mongoUri = process.env.MONGODB_URI;
-const dbName = process.env.DB_NAME;
 const wsUri = process.env.WS_URI;
 
 let db;
@@ -15,13 +13,7 @@ async function connectDB(externalDB) {
     db = externalDB;
     console.log("✅ Using external MongoDB instance (from main.js)");
   } else {
-    const client = new MongoClient(mongoUri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    await client.connect();
-    db = client.db(dbName);
-    console.log("✅ Connected to MongoDB internally");
+    console.error("❌ No external MongoDB instance provided");
   }
 
   zones = await db.collection("zones").find({ active: true }).toArray();
@@ -141,27 +133,23 @@ function onPositionInZone(pose, zone) {
 
 /* ---------------------- WEBSOCKET HANDLER ---------------------- */
 function startSocket() {
-  const socket = io.connect(wsUri, {
-    reconnection: true,
-    reconnectionDelay: 10000,
-    reconnectionAttempts: 10,
-    transports: ["websocket", "polling"],
-  });
+  const socket = new WebSocket(wsUri);
 
-  socket.on("connect", () => {
-    console.log("✅ Connected to WebSocket");
-    console.log("Socket ID:", socket.id);
-    socket.emit("message", { start: ["Pose"] });
-    console.log("Sent start message to device");
-  });
+  socket.onopen = () => {
+    console.log("✅ Connected to raw WebSocket");
+    socket.send(JSON.stringify({ start: ["Pose"] }));
+  };
 
-  socket.on("message", async (data) => {
+  socket.onmessage = async (event) => {
+    const data = JSON.parse(event.data);
     console.log("Received pose data", data);
+
     try {
       if (data.pose) {
         const deviceId = data.slamCoreId || "fake-device-001";
         const pose = data.pose;
         validatePose(pose);
+
         const normalizedPose = {
           ...pose,
           reference_frame: pose.reference_frame || "world",
@@ -194,28 +182,37 @@ function startSocket() {
           normalizedPose
         );
         lastZoneByDevice.set(deviceId, matchedZone);
-        console.log(
-          matchedZone
-            ? `✅ Pose inside zone ${matchedZone.code}`
-            : "❌ Pose outside all zones"
-        );
+
+        const activeBins = await db
+          .collection("bins")
+          .find({ load: true, carriedBy: deviceId })
+          .toArray();
+
+        for (const bin of activeBins) {
+          const updatedBin = {
+            position: {
+              x: normalizedPose.x,
+              y: normalizedPose.y,
+              z: normalizedPose.z,
+              timestamp: normalizedPose.timestamp,
+            },
+            zoneCode: matchedZone ? matchedZone.code : "outside",
+            updatedAt: new Date(),
+          };
+
+          await db
+            .collection("bins")
+            .updateOne({ binId: bin.binId }, { $set: updatedBin });
+          console.log(`📦 Bin ${bin.binId} moved with forklift ${deviceId}`);
+        }
       }
     } catch (error) {
       console.error("Error saving to MongoDB:", error);
     }
-  });
+  };
 
-  socket.on("connect_error", (error) =>
-    console.error("Connection error:", error.message)
-  );
-  socket.on("disconnect", (reason) => {
-    console.log("Disconnected from device:", reason);
-    if (reason === "io server disconnect") socket.connect();
-  });
-  socket.on("reconnect", (attempt) => {
-    console.log(`Reconnected after ${attempt} attempts`);
-    socket.emit("message", { start: ["Pose"] });
-  });
+  socket.onerror = (error) => console.error("WebSocket error:", error);
+  socket.onclose = (e) => console.log("Disconnected from device:", e.reason);
 }
 
 /* ---------------------- EXPORT ENTRY ---------------------- */
@@ -225,4 +222,4 @@ async function init(externalDB) {
   console.log("System ready to receive pose data from device");
 }
 
-module.exports = { init };
+module.exports = { init, checkZones };
