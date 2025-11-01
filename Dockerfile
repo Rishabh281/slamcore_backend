@@ -5,6 +5,7 @@ WORKDIR /usr/src/app
 
 # Copy and install Node dependencies
 COPY package*.json ./
+COPY zones.json ./
 RUN npm install
 
 # Copy everything else

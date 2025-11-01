@@ -1,0 +1,102 @@
+[
+  {
+    "zoneId": 1,
+    "code": "WEIGHING-ZONE",
+    "active": true,
+    "title": "Weighing zone",
+    "description": "Container weighing zone",
+    "boundary": "POLYGON ((373.7 74.2, 377.7 74.2, 377.7 78.2, 373.7 78.2, 373.7 74.2))",
+    "zmax": 100.0,
+    "zmin": -1.0
+  },
+  {
+    "zoneId": 2,
+    "code": "SLITTER-11-HOPPER-LEFT-ZONE",
+    "active": true,
+    "title": "Slitter 11 - Left Box",
+    "description": "Left position under the hopper",
+    "boundary": "POLYGON ((396.8 57.8, 398.8 57.8, 398.8 59.55, 396.8 59.55, 396.8 57.8))",
+    "zmax": 100.0,
+    "zmin": -1.0
+  },
+  {
+    "zoneId": 3,
+    "code": "SLITTER-11-HOPPER-RIGHT-ZONE",
+    "active": true,
+    "title": "Slitter 11 - Right Box",
+    "description": "Right position under the hopper",
+    "boundary": "POLYGON ((396.8 59.55, 398.8 59.55, 398.8 61.3, 396.8 61.3, 396.8 59.55))",
+    "zmax": 100.0,
+    "zmin": -1.0
+  },
+  {
+    "zoneId": 4,
+    "code": "SLITTER-9-10-SCRAP-STORAGE",
+    "active": true,
+    "title": "Slitter 9 and 10 Scrap Storage",
+    "description": "Storage Area",
+    "boundary": "POLYGON ((375 83, 382 83, 382 100, 375 100, 375 83))",
+    "zmax": 100.0,
+    "zmin": -1.0
+  },
+  {
+    "zoneId": 5,
+    "code": "SCRAP-UNWINDER",
+    "active": true,
+    "title": "Scrap unwinder",
+    "description": "Scrap Unwinder",
+    "boundary": "POLYGON ((373.4 146.4, 384.6 146.4, 384.6 168, 373.4 168, 373.4 146.4))",
+    "zmax": 100.0,
+    "zmin": -1.0
+  },
+  {
+    "zoneId": 6,
+    "code": "SLITTER-8-12-N-SCRAP-STORAGE",
+    "active": true,
+    "title": "Slitter 8 and 12 Scrap Storage (North)",
+    "description": "Storage Area",
+    "boundary": "POLYGON ((396.4 138.8, 408 138.8, 408 163.6, 396.4 163.6, 396.4 138.8))",
+    "zmax": 100.0,
+    "zmin": -1.0
+  },
+  {
+    "zoneId": 7,
+    "code": "SLITTER-8-12-S-SCRAP-STORAGE",
+    "active": true,
+    "title": "Slitter 8 and 12 Scrap Storage (South)",
+    "description": "Storage Area",
+    "boundary": "POLYGON ((396.4 2, 413 2, 413 42, 396.4 42, 396.4 2))",
+    "zmax": 100.0,
+    "zmin": -1.0
+  },
+  {
+    "zoneId": 8,
+    "code": "SLITTER-11-SCRAP-STORAGE",
+    "active": true,
+    "title": "Slitter 11 Scrap Storage",
+    "description": "Storage Area",
+    "boundary": "POLYGON ((380.4 45.4, 396.4 45.4, 396.4 71.4, 380.4 71.4, 380.4 45.4))",
+    "zmax": 100.0,
+    "zmin": -1.0
+  },
+  {
+    "zoneId": 9,
+    "code": "SLITTER-10-SCRAP-STORAGE",
+    "active": true,
+    "title": "Slitter 10 Scrap Storage",
+    "description": "Storage Area",
+    "boundary": "POLYGON ((385.4 74.4, 396.4 74.4, 396.4 121, 385.4 121, 385.4 74.4))",
+    "zmax": 100.0,
+    "zmin": -1.0
+  },
+  {
+    "zoneId": 10,
+    "code": "BLANKING",
+    "active": true,
+    "title": "Blanking",
+    "description": "Blanking",
+    "boundary": "POLYGON ((454.5 81.2, 473 50.3, 442.16 31.7, 423.6 62.6, 454.5 81.2))",
+    "zmax": 100.0,
+    "zmin": -1.0
+  }
+]
