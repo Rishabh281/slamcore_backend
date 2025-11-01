@@ -1,4 +1,4 @@
-require("dotenv").config();
+// require("dotenv").config();
 const { init } = require("./ws_com");
 const { startApiServer } = require("./api");
 const { MongoClient } = require("mongodb");
