@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: .
+    container_name: slamcore_backend
+    restart: always
+    ports:
+      - "80:3000"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/
+      - DB_NAME=slamcore_db
+      - PORT=3000
+      - WS_URI=ws://94.112.79.114/v0/slam/ws/2b6b92fd31a6502d2bf1710efda04bc4225c4376c1
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    container_name: slamcore_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

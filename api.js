@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { init, checkZones } = require("./ws_com");
+const { checkZones } = require("./ws_com");
 require("dotenv").config();
 
 const app = express();

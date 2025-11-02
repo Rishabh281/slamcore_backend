@@ -1,4 +1,4 @@
-require("dotenv").config();
+// require("dotenv").config();
 const WebSocket = require("ws");
 
 const wsUri = process.env.WS_URI;
